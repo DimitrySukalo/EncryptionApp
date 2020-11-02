@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptionApp.UI", "EncryptionApp\EncryptionApp.UI.csproj", "{4C912F5A-1AEF-4589-9779-77845E34531F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptionApp.Tests", "EncryptionApp.Tests\EncryptionApp.Tests.csproj", "{9B1B3530-AB31-4142-B703-BFEE2EF47CC4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C912F5A-1AEF-4589-9779-77845E34531F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C912F5A-1AEF-4589-9779-77845E34531F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C912F5A-1AEF-4589-9779-77845E34531F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C912F5A-1AEF-4589-9779-77845E34531F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B1B3530-AB31-4142-B703-BFEE2EF47CC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B1B3530-AB31-4142-B703-BFEE2EF47CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B1B3530-AB31-4142-B703-BFEE2EF47CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B1B3530-AB31-4142-B703-BFEE2EF47CC4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D599697F-94E2-4F5E-A647-522757C97EB6}
+	EndGlobalSection
+EndGlobal
