@@ -2,35 +2,34 @@
 using EncryptionApp.Models.Models;
 using System;
 using System.IO;
-using System.Text.Json;
 using System.Windows.Forms;
 
 namespace EncryptionApp.UI
 {
     public partial class Main : Form
     {
+        private readonly DatabaseContext db;
+
         public Main()
         {
+            db = new DatabaseContext();
             InitializeComponent();
 
             FileExplorer.BeforeSelect += FileExplorer_BeforeSelect;
             FileExplorer.BeforeExpand += FileExplorer_BeforeExpand;
 
             FillDriveNodes();
-            SaveAndShowLogAction();
+            SaveAndShowLogAction(db);
         }
 
-        private async void SaveAndShowLogAction()
+        private async void SaveAndShowLogAction(DatabaseContext db)
         {
             LogInfo.Items.Clear();
 
             LogMessage log = new LogMessage(DateTime.Now, "Application is started!");
 
-            using(DatabaseContext db = new DatabaseContext())
-            {
-                await db.LogMessages.AddAsync(log);
-                await db.SaveChangesAsync();
-            }
+            await db.LogMessages.AddAsync(log);
+            await db.SaveChangesAsync();
 
             LogInfo.Items.Add(log.ToString());
         }
@@ -116,7 +115,7 @@ namespace EncryptionApp.UI
 
         private void LogButton_Click(object sender, EventArgs e)
         {
-            Form logForm = new LogForm();
+            Form logForm = new LogForm(db);
             logForm.Show();
         }
     }
