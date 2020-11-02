@@ -1,5 +1,8 @@
-﻿using System;
+﻿using EncryptionApp.Models.DB;
+using EncryptionApp.Models.Models;
+using System;
 using System.IO;
+using System.Text.Json;
 using System.Windows.Forms;
 
 namespace EncryptionApp.UI
@@ -14,6 +17,22 @@ namespace EncryptionApp.UI
             FileExplorer.BeforeExpand += FileExplorer_BeforeExpand;
 
             FillDriveNodes();
+            SaveAndShowLogAction();
+        }
+
+        private async void SaveAndShowLogAction()
+        {
+            LogInfo.Items.Clear();
+
+            LogMessage log = new LogMessage(DateTime.Now, "Application is started!");
+
+            using(DatabaseContext db = new DatabaseContext())
+            {
+                await db.LogMessages.AddAsync(log);
+                await db.SaveChangesAsync();
+            }
+
+            LogInfo.Items.Add(log.ToString());
         }
 
         private void FileExplorer_BeforeSelect(object sender, TreeViewCancelEventArgs e)
@@ -93,6 +112,12 @@ namespace EncryptionApp.UI
                 }
             }
             catch (Exception) { }
+        }
+
+        private void LogButton_Click(object sender, EventArgs e)
+        {
+            Form logForm = new LogForm();
+            logForm.Show();
         }
     }
 }
