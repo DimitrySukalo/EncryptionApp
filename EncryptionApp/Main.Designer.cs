@@ -34,7 +34,24 @@
             this.HelpItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FileExplorer = new System.Windows.Forms.TreeView();
             this.LogInfo = new System.Windows.Forms.ListBox();
+            this.ActionTitle = new System.Windows.Forms.Label();
+            this.Key = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.QuestionText = new System.Windows.Forms.Label();
+            this.YesRadioButton = new System.Windows.Forms.RadioButton();
+            this.NoRadioButton = new System.Windows.Forms.RadioButton();
+            this.Methods = new System.Windows.Forms.GroupBox();
+            this.ScietaleMethod = new System.Windows.Forms.RadioButton();
+            this.VigenereMethod = new System.Windows.Forms.RadioButton();
+            this.PolybiusSquareMethod = new System.Windows.Forms.RadioButton();
+            this.BASE64Method = new System.Windows.Forms.RadioButton();
+            this.XORMethod = new System.Windows.Forms.RadioButton();
+            this.EncryptButton = new System.Windows.Forms.Button();
+            this.DecryptButton = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.ProgressTitle = new System.Windows.Forms.Label();
             this.ToolBar.SuspendLayout();
+            this.Methods.SuspendLayout();
             this.SuspendLayout();
             // 
             // ToolBar
@@ -88,11 +105,181 @@
             this.LogInfo.Size = new System.Drawing.Size(779, 64);
             this.LogInfo.TabIndex = 3;
             // 
+            // ActionTitle
+            // 
+            this.ActionTitle.AutoSize = true;
+            this.ActionTitle.Location = new System.Drawing.Point(320, 28);
+            this.ActionTitle.Name = "ActionTitle";
+            this.ActionTitle.Size = new System.Drawing.Size(93, 15);
+            this.ActionTitle.TabIndex = 4;
+            this.ActionTitle.Text = "Main operations";
+            // 
+            // Key
+            // 
+            this.Key.AutoSize = true;
+            this.Key.Location = new System.Drawing.Point(321, 67);
+            this.Key.Name = "Key";
+            this.Key.Size = new System.Drawing.Size(26, 15);
+            this.Key.TabIndex = 5;
+            this.Key.Text = "Key";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(353, 64);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(217, 23);
+            this.textBox1.TabIndex = 6;
+            // 
+            // QuestionText
+            // 
+            this.QuestionText.AutoSize = true;
+            this.QuestionText.Location = new System.Drawing.Point(321, 274);
+            this.QuestionText.Name = "QuestionText";
+            this.QuestionText.Size = new System.Drawing.Size(112, 15);
+            this.QuestionText.TabIndex = 14;
+            this.QuestionText.Text = "Make a copy of file?";
+            // 
+            // YesRadioButton
+            // 
+            this.YesRadioButton.AutoSize = true;
+            this.YesRadioButton.Location = new System.Drawing.Point(321, 292);
+            this.YesRadioButton.Name = "YesRadioButton";
+            this.YesRadioButton.Size = new System.Drawing.Size(42, 19);
+            this.YesRadioButton.TabIndex = 15;
+            this.YesRadioButton.TabStop = true;
+            this.YesRadioButton.Text = "Yes";
+            this.YesRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // NoRadioButton
+            // 
+            this.NoRadioButton.AutoSize = true;
+            this.NoRadioButton.Location = new System.Drawing.Point(369, 292);
+            this.NoRadioButton.Name = "NoRadioButton";
+            this.NoRadioButton.Size = new System.Drawing.Size(41, 19);
+            this.NoRadioButton.TabIndex = 16;
+            this.NoRadioButton.TabStop = true;
+            this.NoRadioButton.Text = "No";
+            this.NoRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // Methods
+            // 
+            this.Methods.Controls.Add(this.ScietaleMethod);
+            this.Methods.Controls.Add(this.VigenereMethod);
+            this.Methods.Controls.Add(this.PolybiusSquareMethod);
+            this.Methods.Controls.Add(this.BASE64Method);
+            this.Methods.Controls.Add(this.XORMethod);
+            this.Methods.Location = new System.Drawing.Point(321, 103);
+            this.Methods.Name = "Methods";
+            this.Methods.Size = new System.Drawing.Size(249, 168);
+            this.Methods.TabIndex = 17;
+            this.Methods.TabStop = false;
+            this.Methods.Text = "Methods";
+            // 
+            // ScietaleMethod
+            // 
+            this.ScietaleMethod.AutoSize = true;
+            this.ScietaleMethod.Location = new System.Drawing.Point(6, 122);
+            this.ScietaleMethod.Name = "ScietaleMethod";
+            this.ScietaleMethod.Size = new System.Drawing.Size(65, 19);
+            this.ScietaleMethod.TabIndex = 0;
+            this.ScietaleMethod.TabStop = true;
+            this.ScietaleMethod.Text = "Scietale";
+            this.ScietaleMethod.UseVisualStyleBackColor = true;
+            // 
+            // VigenereMethod
+            // 
+            this.VigenereMethod.AutoSize = true;
+            this.VigenereMethod.Location = new System.Drawing.Point(6, 97);
+            this.VigenereMethod.Name = "VigenereMethod";
+            this.VigenereMethod.Size = new System.Drawing.Size(71, 19);
+            this.VigenereMethod.TabIndex = 0;
+            this.VigenereMethod.TabStop = true;
+            this.VigenereMethod.Text = "Vigenere";
+            this.VigenereMethod.UseVisualStyleBackColor = true;
+            // 
+            // PolybiusSquareMethod
+            // 
+            this.PolybiusSquareMethod.AutoSize = true;
+            this.PolybiusSquareMethod.Location = new System.Drawing.Point(6, 72);
+            this.PolybiusSquareMethod.Name = "PolybiusSquareMethod";
+            this.PolybiusSquareMethod.Size = new System.Drawing.Size(109, 19);
+            this.PolybiusSquareMethod.TabIndex = 0;
+            this.PolybiusSquareMethod.TabStop = true;
+            this.PolybiusSquareMethod.Text = "Polybius Square";
+            this.PolybiusSquareMethod.UseVisualStyleBackColor = true;
+            // 
+            // BASE64Method
+            // 
+            this.BASE64Method.AutoSize = true;
+            this.BASE64Method.Location = new System.Drawing.Point(6, 47);
+            this.BASE64Method.Name = "BASE64Method";
+            this.BASE64Method.Size = new System.Drawing.Size(64, 19);
+            this.BASE64Method.TabIndex = 0;
+            this.BASE64Method.TabStop = true;
+            this.BASE64Method.Text = "BASE64";
+            this.BASE64Method.UseVisualStyleBackColor = true;
+            // 
+            // XORMethod
+            // 
+            this.XORMethod.AutoSize = true;
+            this.XORMethod.Location = new System.Drawing.Point(6, 22);
+            this.XORMethod.Name = "XORMethod";
+            this.XORMethod.Size = new System.Drawing.Size(48, 19);
+            this.XORMethod.TabIndex = 0;
+            this.XORMethod.TabStop = true;
+            this.XORMethod.Text = "XOR";
+            this.XORMethod.UseVisualStyleBackColor = true;
+            // 
+            // EncryptButton
+            // 
+            this.EncryptButton.Location = new System.Drawing.Point(321, 347);
+            this.EncryptButton.Name = "EncryptButton";
+            this.EncryptButton.Size = new System.Drawing.Size(112, 23);
+            this.EncryptButton.TabIndex = 18;
+            this.EncryptButton.Text = "Encrypt";
+            this.EncryptButton.UseVisualStyleBackColor = true;
+            // 
+            // DecryptButton
+            // 
+            this.DecryptButton.Location = new System.Drawing.Point(458, 347);
+            this.DecryptButton.Name = "DecryptButton";
+            this.DecryptButton.Size = new System.Drawing.Size(112, 23);
+            this.DecryptButton.TabIndex = 18;
+            this.DecryptButton.Text = "Decrypt";
+            this.DecryptButton.UseVisualStyleBackColor = true;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(320, 415);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(249, 23);
+            this.progressBar1.TabIndex = 19;
+            // 
+            // ProgressTitle
+            // 
+            this.ProgressTitle.AutoSize = true;
+            this.ProgressTitle.Location = new System.Drawing.Point(379, 397);
+            this.ProgressTitle.Name = "ProgressTitle";
+            this.ProgressTitle.Size = new System.Drawing.Size(126, 15);
+            this.ProgressTitle.TabIndex = 20;
+            this.ProgressTitle.Text = "Progress of processing";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1111, 551);
+            this.Controls.Add(this.ProgressTitle);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.DecryptButton);
+            this.Controls.Add(this.EncryptButton);
+            this.Controls.Add(this.Methods);
+            this.Controls.Add(this.NoRadioButton);
+            this.Controls.Add(this.YesRadioButton);
+            this.Controls.Add(this.QuestionText);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.Key);
+            this.Controls.Add(this.ActionTitle);
             this.Controls.Add(this.LogInfo);
             this.Controls.Add(this.FileExplorer);
             this.Controls.Add(this.ToolBar);
@@ -100,6 +287,8 @@
             this.Text = "EncryptionApp";
             this.ToolBar.ResumeLayout(false);
             this.ToolBar.PerformLayout();
+            this.Methods.ResumeLayout(false);
+            this.Methods.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -112,5 +301,21 @@
         private System.Windows.Forms.ToolStripMenuItem HelpItem;
         private System.Windows.Forms.TreeView FileExplorer;
         private System.Windows.Forms.ListBox LogInfo;
+        private System.Windows.Forms.Label ActionTitle;
+        private System.Windows.Forms.Label Key;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label QuestionText;
+        private System.Windows.Forms.RadioButton YesRadioButton;
+        private System.Windows.Forms.RadioButton NoRadioButton;
+        private System.Windows.Forms.GroupBox Methods;
+        private System.Windows.Forms.RadioButton ScietaleMethod;
+        private System.Windows.Forms.RadioButton VigenereMethod;
+        private System.Windows.Forms.RadioButton PolybiusSquareMethod;
+        private System.Windows.Forms.RadioButton BASE64Method;
+        private System.Windows.Forms.RadioButton XORMethod;
+        private System.Windows.Forms.Button EncryptButton;
+        private System.Windows.Forms.Button DecryptButton;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label ProgressTitle;
     }
 }
