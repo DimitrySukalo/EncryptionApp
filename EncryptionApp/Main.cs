@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EncryptionApp.UI
@@ -42,7 +43,7 @@ namespace EncryptionApp.UI
             }
         }
 
-        private void OpenMenuItem_Click(object sender, EventArgs e)
+        private async void OpenMenuItem_Click(object sender, EventArgs e)
         {
             var fullPath = _fileNode.FullPath;
             
@@ -53,6 +54,8 @@ namespace EncryptionApp.UI
                 nameOfFile.Text = fileInfo.Name;
                 pathOfFile.Text = fileInfo.FullName;
                 createOfFile.Text = fileInfo.CreationTime.ToString();
+
+                await CreateLog($"File is opened: {fileInfo.Name}");
             }
             else
             {
@@ -80,12 +83,7 @@ namespace EncryptionApp.UI
         {
             LogInfo.Items.Clear();
 
-            LogMessage log = new LogMessage(DateTime.Now, "Application is started!");
-
-            await db.LogMessages.AddAsync(log);
-            await db.SaveChangesAsync();
-
-            LogInfo.Items.Add(log.ToString());
+            await CreateLog("Application is started!");
         }
 
         private void FileExplorer_BeforeExpand(object sender, TreeViewCancelEventArgs e)
@@ -136,6 +134,97 @@ namespace EncryptionApp.UI
         {
             Form logForm = new LogForm(_db);
             logForm.Show();
+        }
+
+        private async void EncryptButton_Click(object sender, EventArgs e)
+        {
+            if(XORMethod.Checked)
+            {
+                var key = EncDecKey.Text;
+                if (!string.IsNullOrWhiteSpace(key))
+                {
+                    if (_fileNode != null)
+                    {
+                        if (YesRadioButton.Checked)
+                        {
+                            var path = _fileNode.FullPath;
+
+                            FileInfo file = new FileInfo(path);
+
+                            if (file.Exists)
+                            {
+                                string pathOfNewFile = file.FullName + ".enc";
+                                FileInfo newFile = new FileInfo(pathOfNewFile);
+                                string encryptedText = "";
+
+                                if (!newFile.Exists)
+                                {
+                                    newFile.Create().Close();
+                                    await EncryptFile(key, path, pathOfNewFile, encryptedText);
+                                }
+
+                                string logText = $"File {_fileNode.Name} is encrypted.New file is {newFile.Name }. Method: XOR. Key: {key}";
+
+                                await CreateLog(logText);
+
+                                MessageBox.Show("File is encrypted");
+                            }
+                        }
+                        else if (NoRadioButton.Checked)
+                        {
+                            var path = _fileNode.FullPath;
+                            string encryptedText = "";
+
+                            await EncryptFile(key, path, path, encryptedText);
+
+                            string logText = $"File {_fileNode.Name} is encrypted. Method: XOR. Key: {key}";
+                            await CreateLog(logText);
+
+                            MessageBox.Show("File is encrypted");
+                        }
+                        else if (!YesRadioButton.Checked && !NoRadioButton.Checked)
+                        {
+                            MessageBox.Show("Choose create new file or no");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("File is not choosed!");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Key is not inputed!");
+                }
+            }
+        }
+
+        private async Task CreateLog(string text)
+        {
+            LogMessage log = new LogMessage(DateTime.Now, text);
+
+            await _db.AddAsync(log);
+            await _db.SaveChangesAsync();
+
+            LogInfo.Items.Add(log.ToString());
+        }
+
+        private static async Task EncryptFile(string key, string path, string pathOfNewFile, string encryptedText)
+        {
+            using (StreamReader sr = new StreamReader(path))
+            {
+                var textOfFile = await sr.ReadToEndAsync();
+
+                XORCipher xor = new XORCipher();
+                encryptedText = xor.Encrypt(textOfFile, key);
+                sr.Close();
+            }
+
+            using (StreamWriter sw = new StreamWriter(pathOfNewFile))
+            {
+                await sw.WriteLineAsync(encryptedText);
+                sw.Close();
+            }
         }
     }
 }

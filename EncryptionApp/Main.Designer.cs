@@ -36,7 +36,7 @@
             this.LogInfo = new System.Windows.Forms.ListBox();
             this.ActionTitle = new System.Windows.Forms.Label();
             this.Key = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.EncDecKey = new System.Windows.Forms.TextBox();
             this.QuestionText = new System.Windows.Forms.Label();
             this.YesRadioButton = new System.Windows.Forms.RadioButton();
             this.NoRadioButton = new System.Windows.Forms.RadioButton();
@@ -133,12 +133,12 @@
             this.Key.TabIndex = 5;
             this.Key.Text = "Key";
             // 
-            // textBox1
+            // EncDecKey
             // 
-            this.textBox1.Location = new System.Drawing.Point(353, 64);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(217, 23);
-            this.textBox1.TabIndex = 6;
+            this.EncDecKey.Location = new System.Drawing.Point(353, 64);
+            this.EncDecKey.Name = "EncDecKey";
+            this.EncDecKey.Size = new System.Drawing.Size(217, 23);
+            this.EncDecKey.TabIndex = 6;
             // 
             // QuestionText
             // 
@@ -248,6 +248,7 @@
             this.EncryptButton.TabIndex = 18;
             this.EncryptButton.Text = "Encrypt";
             this.EncryptButton.UseVisualStyleBackColor = true;
+            this.EncryptButton.Click += new System.EventHandler(this.EncryptButton_Click);
             // 
             // DecryptButton
             // 
@@ -377,7 +378,7 @@
             this.Controls.Add(this.NoRadioButton);
             this.Controls.Add(this.YesRadioButton);
             this.Controls.Add(this.QuestionText);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.EncDecKey);
             this.Controls.Add(this.Key);
             this.Controls.Add(this.ActionTitle);
             this.Controls.Add(this.LogInfo);
@@ -405,7 +406,7 @@
         private System.Windows.Forms.ListBox LogInfo;
         private System.Windows.Forms.Label ActionTitle;
         private System.Windows.Forms.Label Key;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox EncDecKey;
         private System.Windows.Forms.Label QuestionText;
         private System.Windows.Forms.RadioButton YesRadioButton;
         private System.Windows.Forms.RadioButton NoRadioButton;
