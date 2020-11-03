@@ -50,8 +50,18 @@
             this.DecryptButton = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.ProgressTitle = new System.Windows.Forms.Label();
+            this.FileInfoBox = new System.Windows.Forms.GroupBox();
+            this.createOfFile = new System.Windows.Forms.Label();
+            this.CreatedLabel = new System.Windows.Forms.Label();
+            this.nameOfFile = new System.Windows.Forms.Label();
+            this.NameLabel = new System.Windows.Forms.Label();
+            this.pathOfFile = new System.Windows.Forms.Label();
+            this.PathLabel = new System.Windows.Forms.Label();
+            this.sizeOfFile = new System.Windows.Forms.Label();
+            this.SizeLabel = new System.Windows.Forms.Label();
             this.ToolBar.SuspendLayout();
             this.Methods.SuspendLayout();
+            this.FileInfoBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // ToolBar
@@ -264,11 +274,101 @@
             this.ProgressTitle.TabIndex = 20;
             this.ProgressTitle.Text = "Progress of processing";
             // 
+            // FileInfoBox
+            // 
+            this.FileInfoBox.Controls.Add(this.createOfFile);
+            this.FileInfoBox.Controls.Add(this.CreatedLabel);
+            this.FileInfoBox.Controls.Add(this.nameOfFile);
+            this.FileInfoBox.Controls.Add(this.NameLabel);
+            this.FileInfoBox.Controls.Add(this.pathOfFile);
+            this.FileInfoBox.Controls.Add(this.PathLabel);
+            this.FileInfoBox.Controls.Add(this.sizeOfFile);
+            this.FileInfoBox.Controls.Add(this.SizeLabel);
+            this.FileInfoBox.Location = new System.Drawing.Point(619, 28);
+            this.FileInfoBox.Name = "FileInfoBox";
+            this.FileInfoBox.Size = new System.Drawing.Size(480, 141);
+            this.FileInfoBox.TabIndex = 21;
+            this.FileInfoBox.TabStop = false;
+            this.FileInfoBox.Text = "File Info";
+            // 
+            // createOfFile
+            // 
+            this.createOfFile.AutoSize = true;
+            this.createOfFile.Location = new System.Drawing.Point(57, 113);
+            this.createOfFile.Name = "createOfFile";
+            this.createOfFile.Size = new System.Drawing.Size(98, 15);
+            this.createOfFile.TabIndex = 7;
+            this.createOfFile.Text = "file is not opened";
+            // 
+            // CreatedLabel
+            // 
+            this.CreatedLabel.AutoSize = true;
+            this.CreatedLabel.Location = new System.Drawing.Point(7, 113);
+            this.CreatedLabel.Name = "CreatedLabel";
+            this.CreatedLabel.Size = new System.Drawing.Size(48, 15);
+            this.CreatedLabel.TabIndex = 6;
+            this.CreatedLabel.Text = "Created";
+            // 
+            // nameOfFile
+            // 
+            this.nameOfFile.AutoSize = true;
+            this.nameOfFile.Location = new System.Drawing.Point(57, 88);
+            this.nameOfFile.Name = "nameOfFile";
+            this.nameOfFile.Size = new System.Drawing.Size(98, 15);
+            this.nameOfFile.TabIndex = 5;
+            this.nameOfFile.Text = "file is not opened";
+            // 
+            // NameLabel
+            // 
+            this.NameLabel.AutoSize = true;
+            this.NameLabel.Location = new System.Drawing.Point(6, 88);
+            this.NameLabel.Name = "NameLabel";
+            this.NameLabel.Size = new System.Drawing.Size(39, 15);
+            this.NameLabel.TabIndex = 4;
+            this.NameLabel.Text = "Name";
+            // 
+            // pathOfFile
+            // 
+            this.pathOfFile.AutoSize = true;
+            this.pathOfFile.Location = new System.Drawing.Point(57, 63);
+            this.pathOfFile.Name = "pathOfFile";
+            this.pathOfFile.Size = new System.Drawing.Size(98, 15);
+            this.pathOfFile.TabIndex = 3;
+            this.pathOfFile.Text = "file is not opened";
+            // 
+            // PathLabel
+            // 
+            this.PathLabel.AutoSize = true;
+            this.PathLabel.Location = new System.Drawing.Point(6, 63);
+            this.PathLabel.Name = "PathLabel";
+            this.PathLabel.Size = new System.Drawing.Size(31, 15);
+            this.PathLabel.TabIndex = 2;
+            this.PathLabel.Text = "Path";
+            // 
+            // sizeOfFile
+            // 
+            this.sizeOfFile.AutoSize = true;
+            this.sizeOfFile.Location = new System.Drawing.Point(57, 36);
+            this.sizeOfFile.Name = "sizeOfFile";
+            this.sizeOfFile.Size = new System.Drawing.Size(98, 15);
+            this.sizeOfFile.TabIndex = 1;
+            this.sizeOfFile.Text = "file is not opened";
+            // 
+            // SizeLabel
+            // 
+            this.SizeLabel.AutoSize = true;
+            this.SizeLabel.Location = new System.Drawing.Point(6, 36);
+            this.SizeLabel.Name = "SizeLabel";
+            this.SizeLabel.Size = new System.Drawing.Size(27, 15);
+            this.SizeLabel.TabIndex = 0;
+            this.SizeLabel.Text = "Size";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1111, 551);
+            this.Controls.Add(this.FileInfoBox);
             this.Controls.Add(this.ProgressTitle);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.DecryptButton);
@@ -289,6 +389,8 @@
             this.ToolBar.PerformLayout();
             this.Methods.ResumeLayout(false);
             this.Methods.PerformLayout();
+            this.FileInfoBox.ResumeLayout(false);
+            this.FileInfoBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -317,5 +419,14 @@
         private System.Windows.Forms.Button DecryptButton;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label ProgressTitle;
+        private System.Windows.Forms.GroupBox FileInfoBox;
+        private System.Windows.Forms.Label createOfFile;
+        private System.Windows.Forms.Label CreatedLabel;
+        private System.Windows.Forms.Label nameOfFile;
+        private System.Windows.Forms.Label NameLabel;
+        private System.Windows.Forms.Label pathOfFile;
+        private System.Windows.Forms.Label PathLabel;
+        private System.Windows.Forms.Label sizeOfFile;
+        private System.Windows.Forms.Label SizeLabel;
     }
 }

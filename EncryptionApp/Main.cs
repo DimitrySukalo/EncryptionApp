@@ -10,17 +10,54 @@ namespace EncryptionApp.UI
 {
     public partial class Main : Form
     {
-        private readonly DatabaseContext db;
+        private readonly DatabaseContext _db;
+        private TreeNode _fileNode;
 
         public Main()
         {
-            db = new DatabaseContext();
+            _db = new DatabaseContext();
             InitializeComponent();
 
             FileExplorer.BeforeExpand += FileExplorer_BeforeExpand;
+            FileExplorer.NodeMouseClick += FileExplorer_NodeMouseClick;
             SetLogicalDrivers();
 
-            SaveAndShowLogAction(db);
+            SaveAndShowLogAction(_db);
+        }
+
+        private void FileExplorer_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                ToolStripMenuItem openMenuItem = new ToolStripMenuItem("Open");
+
+                ContextMenuStrip contextMenu = new ContextMenuStrip();
+                contextMenu.Items.Add(openMenuItem);
+
+                FileExplorer.ContextMenuStrip = contextMenu;
+
+                openMenuItem.Click += OpenMenuItem_Click;
+
+                _fileNode = e.Node;
+            }
+        }
+
+        private void OpenMenuItem_Click(object sender, EventArgs e)
+        {
+            var fullPath = _fileNode.FullPath;
+            
+            FileInfo fileInfo = new FileInfo(fullPath);
+            if (fileInfo.Exists)
+            {
+                sizeOfFile.Text = fileInfo.Length.ToString() + " bytes";
+                nameOfFile.Text = fileInfo.Name;
+                pathOfFile.Text = fileInfo.FullName;
+                createOfFile.Text = fileInfo.CreationTime.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Choose file that to encrypt it!");
+            }
         }
 
         private void SetLogicalDrivers()
@@ -54,7 +91,6 @@ namespace EncryptionApp.UI
         private void FileExplorer_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
             List<string> dirs = new List<string>();
-            List<string> files = new List<string>();
 
             try
             {
@@ -98,7 +134,7 @@ namespace EncryptionApp.UI
 
         private void LogButton_Click(object sender, EventArgs e)
         {
-            Form logForm = new LogForm(db);
+            Form logForm = new LogForm(_db);
             logForm.Show();
         }
     }
