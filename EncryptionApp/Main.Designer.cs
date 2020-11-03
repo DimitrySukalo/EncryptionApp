@@ -59,6 +59,7 @@
             this.PathLabel = new System.Windows.Forms.Label();
             this.sizeOfFile = new System.Windows.Forms.Label();
             this.SizeLabel = new System.Windows.Forms.Label();
+            this.Caesar = new System.Windows.Forms.RadioButton();
             this.ToolBar.SuspendLayout();
             this.Methods.SuspendLayout();
             this.FileInfoBox.SuspendLayout();
@@ -143,7 +144,7 @@
             // QuestionText
             // 
             this.QuestionText.AutoSize = true;
-            this.QuestionText.Location = new System.Drawing.Point(321, 274);
+            this.QuestionText.Location = new System.Drawing.Point(320, 304);
             this.QuestionText.Name = "QuestionText";
             this.QuestionText.Size = new System.Drawing.Size(112, 15);
             this.QuestionText.TabIndex = 14;
@@ -152,7 +153,7 @@
             // YesRadioButton
             // 
             this.YesRadioButton.AutoSize = true;
-            this.YesRadioButton.Location = new System.Drawing.Point(321, 292);
+            this.YesRadioButton.Location = new System.Drawing.Point(320, 322);
             this.YesRadioButton.Name = "YesRadioButton";
             this.YesRadioButton.Size = new System.Drawing.Size(42, 19);
             this.YesRadioButton.TabIndex = 15;
@@ -163,7 +164,7 @@
             // NoRadioButton
             // 
             this.NoRadioButton.AutoSize = true;
-            this.NoRadioButton.Location = new System.Drawing.Point(369, 292);
+            this.NoRadioButton.Location = new System.Drawing.Point(368, 322);
             this.NoRadioButton.Name = "NoRadioButton";
             this.NoRadioButton.Size = new System.Drawing.Size(41, 19);
             this.NoRadioButton.TabIndex = 16;
@@ -173,6 +174,7 @@
             // 
             // Methods
             // 
+            this.Methods.Controls.Add(this.Caesar);
             this.Methods.Controls.Add(this.ScietaleMethod);
             this.Methods.Controls.Add(this.VigenereMethod);
             this.Methods.Controls.Add(this.PolybiusSquareMethod);
@@ -180,7 +182,7 @@
             this.Methods.Controls.Add(this.XORMethod);
             this.Methods.Location = new System.Drawing.Point(321, 103);
             this.Methods.Name = "Methods";
-            this.Methods.Size = new System.Drawing.Size(249, 168);
+            this.Methods.Size = new System.Drawing.Size(249, 198);
             this.Methods.TabIndex = 17;
             this.Methods.TabStop = false;
             this.Methods.Text = "Methods";
@@ -242,7 +244,7 @@
             // 
             // EncryptButton
             // 
-            this.EncryptButton.Location = new System.Drawing.Point(321, 347);
+            this.EncryptButton.Location = new System.Drawing.Point(320, 366);
             this.EncryptButton.Name = "EncryptButton";
             this.EncryptButton.Size = new System.Drawing.Size(112, 23);
             this.EncryptButton.TabIndex = 18;
@@ -252,7 +254,7 @@
             // 
             // DecryptButton
             // 
-            this.DecryptButton.Location = new System.Drawing.Point(458, 347);
+            this.DecryptButton.Location = new System.Drawing.Point(457, 366);
             this.DecryptButton.Name = "DecryptButton";
             this.DecryptButton.Size = new System.Drawing.Size(112, 23);
             this.DecryptButton.TabIndex = 18;
@@ -261,7 +263,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(320, 415);
+            this.progressBar1.Location = new System.Drawing.Point(320, 423);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(249, 23);
             this.progressBar1.TabIndex = 19;
@@ -269,7 +271,7 @@
             // ProgressTitle
             // 
             this.ProgressTitle.AutoSize = true;
-            this.ProgressTitle.Location = new System.Drawing.Point(379, 397);
+            this.ProgressTitle.Location = new System.Drawing.Point(379, 405);
             this.ProgressTitle.Name = "ProgressTitle";
             this.ProgressTitle.Size = new System.Drawing.Size(126, 15);
             this.ProgressTitle.TabIndex = 20;
@@ -364,6 +366,17 @@
             this.SizeLabel.TabIndex = 0;
             this.SizeLabel.Text = "Size";
             // 
+            // Caesar
+            // 
+            this.Caesar.AutoSize = true;
+            this.Caesar.Location = new System.Drawing.Point(6, 148);
+            this.Caesar.Name = "Caesar";
+            this.Caesar.Size = new System.Drawing.Size(60, 19);
+            this.Caesar.TabIndex = 1;
+            this.Caesar.TabStop = true;
+            this.Caesar.Text = "Caesar";
+            this.Caesar.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -429,5 +442,6 @@
         private System.Windows.Forms.Label PathLabel;
         private System.Windows.Forms.Label sizeOfFile;
         private System.Windows.Forms.Label SizeLabel;
+        private System.Windows.Forms.RadioButton Caesar;
     }
 }

@@ -140,6 +140,8 @@ namespace EncryptionApp.UI
         {
             if(XORMethod.Checked)
             {
+                Timer timer = new Timer();
+                timer.Tick += Timer_Tick;
                 var key = EncDecKey.Text;
                 if (!string.IsNullOrWhiteSpace(key))
                 {
@@ -147,6 +149,8 @@ namespace EncryptionApp.UI
                     {
                         if (YesRadioButton.Checked)
                         {
+                            timer.Start();
+
                             var path = _fileNode.FullPath;
 
                             FileInfo file = new FileInfo(path);
@@ -167,11 +171,18 @@ namespace EncryptionApp.UI
 
                                 await CreateLog(logText);
 
+                                timer.Stop();
+                                progressBar1.Maximum = timer.Interval;
+                                progressBar1.Value = timer.Interval;
+
                                 MessageBox.Show("File is encrypted");
                             }
+
                         }
                         else if (NoRadioButton.Checked)
                         {
+                            timer.Start();
+
                             var path = _fileNode.FullPath;
                             string encryptedText = "";
 
@@ -179,6 +190,10 @@ namespace EncryptionApp.UI
 
                             string logText = $"File {_fileNode.Name} is encrypted. Method: XOR. Key: {key}";
                             await CreateLog(logText);
+
+                            timer.Stop();
+                            progressBar1.Maximum = timer.Interval;
+                            progressBar1.Value = timer.Interval;
 
                             MessageBox.Show("File is encrypted");
                         }
@@ -197,6 +212,11 @@ namespace EncryptionApp.UI
                     MessageBox.Show("Key is not inputed!");
                 }
             }
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            progressBar1.Increment(1);
         }
 
         private async Task CreateLog(string text)
