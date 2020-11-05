@@ -15,7 +15,7 @@ namespace EncryptionApp.UI
     {
         private readonly DatabaseContext _db;
         private TreeNode _fileNode;
-        private delegate string ProcessFile(string text, string password);
+        private delegate string ProcessFile<T>(string text, T password);
 
 
         public Main()
@@ -149,15 +149,20 @@ namespace EncryptionApp.UI
         /// </summary>
         private async void EncryptButton_Click(object sender, EventArgs e)
         {
-            XORCipher xor = new XORCipher();
-            ProcessFile xorEnc = xor.Encrypt;
+            var key = EncDecKey.Text;
 
-            var resultOfProcessing = await ProccessOfDecryptionOrEnctyprion(xorEnc);
-
-            if (resultOfProcessing)
+            if (XORMethod.Checked)
             {
-                ShowProccesMessage("File is encrypted");
-                ClearScreenInfo();
+                XORCipher xor = new XORCipher();
+                ProcessFile<string> xorEnc = xor.Encrypt;
+
+                var resultOfProcessing = await ProccessOfDecryptionOrEnctyprion(xorEnc, key, true);
+
+                if (resultOfProcessing)
+                {
+                    ShowProccesMessage("File is encrypted");
+                    ClearScreenInfo();
+                }
             }
         }
 
@@ -166,15 +171,20 @@ namespace EncryptionApp.UI
         /// </summary>
         private async void DecryptButton_Click(object sender, EventArgs e)
         {
-            XORCipher xor = new XORCipher();
-            ProcessFile xorDec = xor.Decrypt;
+            var key = EncDecKey.Text;
 
-            var resultOfProcessing = await ProccessOfDecryptionOrEnctyprion(xorDec);
-
-            if (resultOfProcessing)
+            if (XORMethod.Checked)
             {
-                ShowProccesMessage("File is decrypted");
-                ClearScreenInfo();
+                XORCipher xor = new XORCipher();
+                ProcessFile<string> xorDec = xor.Decrypt;
+
+                var resultOfProcessing = await ProccessOfDecryptionOrEnctyprion(xorDec, key, false);
+
+                if (resultOfProcessing)
+                {
+                    ShowProccesMessage("File is decrypted");
+                    ClearScreenInfo();
+                }
             }
         }
 
@@ -185,10 +195,10 @@ namespace EncryptionApp.UI
         {
             EncDecKey.Text = "";
             _fileNode = null;
-            sizeOfFile.Text = "";
-            pathOfFile.Text = "";
-            nameOfFile.Text = "";
-            createOfFile.Text = "";
+            sizeOfFile.Text = "file is not opened";
+            pathOfFile.Text = "file is not opened";
+            nameOfFile.Text = "file is not opened";
+            createOfFile.Text = "file is not opened";
             progressBar1.Value = 0;
         }
 
@@ -218,58 +228,47 @@ namespace EncryptionApp.UI
         /// </summary>
         /// <param name="processFile">What to do with file</param>
         /// <returns></returns>
-        private async Task<bool> ProccessOfDecryptionOrEnctyprion(ProcessFile processFile)
+        private async Task<bool> ProccessOfDecryptionOrEnctyprion<T>(ProcessFile<T> processFile, T key, bool addEnc)
         {
-            if (XORMethod.Checked)
+            Timer timer = new Timer();
+            timer.Tick += Timer_Tick;
+
+            if (key != null)
             {
-                Timer timer = new Timer();
-                timer.Tick += Timer_Tick;
-                var key = EncDecKey.Text;
-                if (!string.IsNullOrWhiteSpace(key))
+                if (_fileNode != null)
                 {
-                    if (_fileNode != null)
+                    if (YesRadioButton.Checked)
                     {
-                        if (YesRadioButton.Checked)
+                        timer.Start();
+
+                        var path = _fileNode.FullPath;
+
+                        FileInfo file = new FileInfo(path);
+
+                        if (file.Exists)
                         {
-                            timer.Start();
+                            string pathOfNewFile = "";
 
-                            var path = _fileNode.FullPath;
-
-                            FileInfo file = new FileInfo(path);
-
-                            if (file.Exists)
+                            if (addEnc)
                             {
-                                string pathOfNewFile = file.FullName + ".enc";
-                                FileInfo newFile = new FileInfo(pathOfNewFile);
-
-                                if (!newFile.Exists)
-                                {
-                                    newFile.Create().Close();
-
-                                    await ProccesFile(key, path, pathOfNewFile, processFile);
-                                }
-
-                                string logText = $"File {_fileNode.Name} is processed.New file is {newFile.Name }. Key: {key}";
-
-                                await CreateLog(logText);
-
-                                timer.Stop();
-                                progressBar1.Maximum = timer.Interval;
-                                progressBar1.Value = timer.Interval;
-
-                                return true;
+                                pathOfNewFile = file.FullName + ".enc";
+                            }
+                            else
+                            {
+                                pathOfNewFile = file.FullName.Trim(".enc".ToCharArray()) + ".dec";
                             }
 
-                        }
-                        else if (NoRadioButton.Checked)
-                        {
-                            timer.Start();
+                            FileInfo newFile = new FileInfo(pathOfNewFile);
 
-                            var path = _fileNode.FullPath;
+                            if (!newFile.Exists)
+                            {
+                                newFile.Create().Close();
+                            }
 
-                            await ProccesFile(key, path, path, processFile);
+                            await ProccesFile(key, path, pathOfNewFile, processFile);
 
-                            string logText = $"File {_fileNode.Name} is processed. Key: {key}";
+                            string logText = $"File {_fileNode.Name} is processed.New file is {newFile.Name }. Key: {key}";
+
                             await CreateLog(logText);
 
                             timer.Stop();
@@ -278,29 +277,47 @@ namespace EncryptionApp.UI
 
                             return true;
                         }
-                        else if (!YesRadioButton.Checked && !NoRadioButton.Checked)
-                        {
-                            MessageBox.Show("Choose create new file or no");
 
-                            return false;
-                        }
                     }
-                    else
+                    else if (NoRadioButton.Checked)
                     {
-                        MessageBox.Show("File is not choosed!");
+                        timer.Start();
+
+                        var path = _fileNode.FullPath;
+
+                        await ProccesFile(key, path, path, processFile);
+
+                        string logText = $"File {_fileNode.Name} is processed. Key: {key}";
+                        await CreateLog(logText);
+
+                        timer.Stop();
+                        progressBar1.Maximum = timer.Interval;
+                        progressBar1.Value = timer.Interval;
+
+                        return true;
+                    }
+                    else if (!YesRadioButton.Checked && !NoRadioButton.Checked)
+                    {
+                        MessageBox.Show("Choose create new file or no");
 
                         return false;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Key is not inputed!");
+                    MessageBox.Show("File is not choosed!");
 
                     return false;
                 }
-            }
 
-            return false;
+                return false;
+            }
+            else
+            {
+                MessageBox.Show("Key is not inputed!");
+
+                return false;
+            }
         }
 
         /// <summary>
@@ -335,7 +352,7 @@ namespace EncryptionApp.UI
         /// <param name="pathOfNewFile">Path of new file</param>
         /// <param name="processFile">What to do with file, namely: encrypt or decrypt</param>
         /// <returns></returns>
-        private static async Task ProccesFile(string key, string path, string pathOfNewFile, ProcessFile processFile)
+        private static async Task ProccesFile<T>(T key, string path, string pathOfNewFile, ProcessFile<T> processFile)
         {
             string processedText = "";
 
