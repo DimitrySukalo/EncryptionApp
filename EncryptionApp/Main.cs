@@ -4,8 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Message = EncryptionApp.Models.Models.Message;
 
 namespace EncryptionApp.UI
 {
@@ -13,6 +15,8 @@ namespace EncryptionApp.UI
     {
         private readonly DatabaseContext _db;
         private TreeNode _fileNode;
+        private delegate string ProcessFile(string text, string password);
+
 
         public Main()
         {
@@ -86,6 +90,7 @@ namespace EncryptionApp.UI
             await CreateLog("Application is started!");
         }
 
+
         private void FileExplorer_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
             List<string> dirs = new List<string>();
@@ -130,15 +135,92 @@ namespace EncryptionApp.UI
             catch (Exception) { }
         }
 
+        /// <summary>
+        /// Show logs for users
+        /// </summary>
         private void LogButton_Click(object sender, EventArgs e)
         {
             Form logForm = new LogForm(_db);
             logForm.Show();
         }
 
+        /// <summary>
+        /// Enctypr file button
+        /// </summary>
         private async void EncryptButton_Click(object sender, EventArgs e)
         {
-            if(XORMethod.Checked)
+            XORCipher xor = new XORCipher();
+            ProcessFile xorEnc = xor.Encrypt;
+
+            var resultOfProcessing = await ProccessOfDecryptionOrEnctyprion(xorEnc);
+
+            if (resultOfProcessing)
+            {
+                ShowProccesMessage("File is encrypted");
+                ClearScreenInfo();
+            }
+        }
+
+        /// <summary>
+        /// Decrypt file button
+        /// </summary>
+        private async void DecryptButton_Click(object sender, EventArgs e)
+        {
+            XORCipher xor = new XORCipher();
+            ProcessFile xorDec = xor.Decrypt;
+
+            var resultOfProcessing = await ProccessOfDecryptionOrEnctyprion(xorDec);
+
+            if (resultOfProcessing)
+            {
+                ShowProccesMessage("File is decrypted");
+                ClearScreenInfo();
+            }
+        }
+
+        /// <summary>
+        /// Clearing data of file
+        /// </summary>
+        private void ClearScreenInfo()
+        {
+            EncDecKey.Text = "";
+            _fileNode = null;
+            sizeOfFile.Text = "";
+            pathOfFile.Text = "";
+            nameOfFile.Text = "";
+            createOfFile.Text = "";
+            progressBar1.Value = 0;
+        }
+
+        /// <summary>
+        /// Proccess of showing message 
+        /// </summary>
+        /// <param name="text">Text of message</param>
+        private void ShowProccesMessage(string text)
+        {
+            Message message = new Message(text);
+            message._showMessage += ShowMessageBox;
+
+            message.ShowMessage();
+        }
+
+        /// <summary>
+        /// Show message for user
+        /// </summary>
+        /// <param name="text"></param>
+        private void ShowMessageBox(string text)
+        {
+            MessageBox.Show(text);
+        }
+
+        /// <summary>
+        /// Processing of checking of inputed files and after this file is enctyps or decrypts
+        /// </summary>
+        /// <param name="processFile">What to do with file</param>
+        /// <returns></returns>
+        private async Task<bool> ProccessOfDecryptionOrEnctyprion(ProcessFile processFile)
+        {
+            if (XORMethod.Checked)
             {
                 Timer timer = new Timer();
                 timer.Tick += Timer_Tick;
@@ -159,15 +241,15 @@ namespace EncryptionApp.UI
                             {
                                 string pathOfNewFile = file.FullName + ".enc";
                                 FileInfo newFile = new FileInfo(pathOfNewFile);
-                                string encryptedText = "";
 
                                 if (!newFile.Exists)
                                 {
                                     newFile.Create().Close();
-                                    await EncryptFile(key, path, pathOfNewFile, encryptedText);
+
+                                    await ProccesFile(key, path, pathOfNewFile, processFile);
                                 }
 
-                                string logText = $"File {_fileNode.Name} is encrypted.New file is {newFile.Name }. Method: XOR. Key: {key}";
+                                string logText = $"File {_fileNode.Name} is processed.New file is {newFile.Name }. Key: {key}";
 
                                 await CreateLog(logText);
 
@@ -175,7 +257,7 @@ namespace EncryptionApp.UI
                                 progressBar1.Maximum = timer.Interval;
                                 progressBar1.Value = timer.Interval;
 
-                                MessageBox.Show("File is encrypted");
+                                return true;
                             }
 
                         }
@@ -184,41 +266,56 @@ namespace EncryptionApp.UI
                             timer.Start();
 
                             var path = _fileNode.FullPath;
-                            string encryptedText = "";
 
-                            await EncryptFile(key, path, path, encryptedText);
+                            await ProccesFile(key, path, path, processFile);
 
-                            string logText = $"File {_fileNode.Name} is encrypted. Method: XOR. Key: {key}";
+                            string logText = $"File {_fileNode.Name} is processed. Key: {key}";
                             await CreateLog(logText);
 
                             timer.Stop();
                             progressBar1.Maximum = timer.Interval;
                             progressBar1.Value = timer.Interval;
 
-                            MessageBox.Show("File is encrypted");
+                            return true;
                         }
                         else if (!YesRadioButton.Checked && !NoRadioButton.Checked)
                         {
                             MessageBox.Show("Choose create new file or no");
+
+                            return false;
                         }
                     }
                     else
                     {
                         MessageBox.Show("File is not choosed!");
+
+                        return false;
                     }
                 }
                 else
                 {
                     MessageBox.Show("Key is not inputed!");
+
+                    return false;
                 }
             }
+
+            return false;
         }
 
+        /// <summary>
+        /// Timer of proccesing
+        /// </summary>
         private void Timer_Tick(object sender, EventArgs e)
         {
             progressBar1.Increment(1);
         }
 
+        /// <summary>
+        /// Creating log of user action
+        /// </summary>
+        /// <param name="text">Text of log</param>
+        /// <returns></returns>
         private async Task CreateLog(string text)
         {
             LogMessage log = new LogMessage(DateTime.Now, text);
@@ -229,20 +326,30 @@ namespace EncryptionApp.UI
             LogInfo.Items.Add(log.ToString());
         }
 
-        private static async Task EncryptFile(string key, string path, string pathOfNewFile, string encryptedText)
+
+        /// <summary>
+        /// Encrypting of decription file order to different methods
+        /// </summary>
+        /// <param name="key">Key of encryption or decryption</param>
+        /// <param name="path">Path of old file</param>
+        /// <param name="pathOfNewFile">Path of new file</param>
+        /// <param name="processFile">What to do with file, namely: encrypt or decrypt</param>
+        /// <returns></returns>
+        private static async Task ProccesFile(string key, string path, string pathOfNewFile, ProcessFile processFile)
         {
+            string processedText = "";
+
             using (StreamReader sr = new StreamReader(path))
             {
                 var textOfFile = await sr.ReadToEndAsync();
 
-                XORCipher xor = new XORCipher();
-                encryptedText = xor.Encrypt(textOfFile, key);
+                processedText = processFile?.Invoke(textOfFile, key);
                 sr.Close();
             }
 
             using (StreamWriter sw = new StreamWriter(pathOfNewFile))
             {
-                await sw.WriteLineAsync(encryptedText);
+                await sw.WriteAsync(processedText);
                 sw.Close();
             }
         }

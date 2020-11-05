@@ -41,6 +41,7 @@
             this.YesRadioButton = new System.Windows.Forms.RadioButton();
             this.NoRadioButton = new System.Windows.Forms.RadioButton();
             this.Methods = new System.Windows.Forms.GroupBox();
+            this.Caesar = new System.Windows.Forms.RadioButton();
             this.ScietaleMethod = new System.Windows.Forms.RadioButton();
             this.VigenereMethod = new System.Windows.Forms.RadioButton();
             this.PolybiusSquareMethod = new System.Windows.Forms.RadioButton();
@@ -59,7 +60,6 @@
             this.PathLabel = new System.Windows.Forms.Label();
             this.sizeOfFile = new System.Windows.Forms.Label();
             this.SizeLabel = new System.Windows.Forms.Label();
-            this.Caesar = new System.Windows.Forms.RadioButton();
             this.ToolBar.SuspendLayout();
             this.Methods.SuspendLayout();
             this.FileInfoBox.SuspendLayout();
@@ -187,6 +187,17 @@
             this.Methods.TabStop = false;
             this.Methods.Text = "Methods";
             // 
+            // Caesar
+            // 
+            this.Caesar.AutoSize = true;
+            this.Caesar.Location = new System.Drawing.Point(6, 148);
+            this.Caesar.Name = "Caesar";
+            this.Caesar.Size = new System.Drawing.Size(60, 19);
+            this.Caesar.TabIndex = 1;
+            this.Caesar.TabStop = true;
+            this.Caesar.Text = "Caesar";
+            this.Caesar.UseVisualStyleBackColor = true;
+            // 
             // ScietaleMethod
             // 
             this.ScietaleMethod.AutoSize = true;
@@ -260,6 +271,7 @@
             this.DecryptButton.TabIndex = 18;
             this.DecryptButton.Text = "Decrypt";
             this.DecryptButton.UseVisualStyleBackColor = true;
+            this.DecryptButton.Click += new System.EventHandler(this.DecryptButton_Click);
             // 
             // progressBar1
             // 
@@ -365,17 +377,6 @@
             this.SizeLabel.Size = new System.Drawing.Size(27, 15);
             this.SizeLabel.TabIndex = 0;
             this.SizeLabel.Text = "Size";
-            // 
-            // Caesar
-            // 
-            this.Caesar.AutoSize = true;
-            this.Caesar.Location = new System.Drawing.Point(6, 148);
-            this.Caesar.Name = "Caesar";
-            this.Caesar.Size = new System.Drawing.Size(60, 19);
-            this.Caesar.TabIndex = 1;
-            this.Caesar.TabStop = true;
-            this.Caesar.Text = "Caesar";
-            this.Caesar.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
