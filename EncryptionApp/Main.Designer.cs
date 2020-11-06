@@ -60,6 +60,9 @@
             this.PathLabel = new System.Windows.Forms.Label();
             this.sizeOfFile = new System.Windows.Forms.Label();
             this.SizeLabel = new System.Windows.Forms.Label();
+            this.contentOfFile = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.warningText = new System.Windows.Forms.Label();
             this.ToolBar.SuspendLayout();
             this.Methods.SuspendLayout();
             this.FileInfoBox.SuspendLayout();
@@ -197,6 +200,7 @@
             this.Caesar.TabStop = true;
             this.Caesar.Text = "Caesar";
             this.Caesar.UseVisualStyleBackColor = true;
+            this.Caesar.Click += new System.EventHandler(this.Caesar_Click);
             // 
             // ScietaleMethod
             // 
@@ -208,6 +212,7 @@
             this.ScietaleMethod.TabStop = true;
             this.ScietaleMethod.Text = "Scietale";
             this.ScietaleMethod.UseVisualStyleBackColor = true;
+            this.ScietaleMethod.Click += new System.EventHandler(this.ScietaleMethod_Click);
             // 
             // VigenereMethod
             // 
@@ -219,6 +224,7 @@
             this.VigenereMethod.TabStop = true;
             this.VigenereMethod.Text = "Vigenere";
             this.VigenereMethod.UseVisualStyleBackColor = true;
+            this.VigenereMethod.Click += new System.EventHandler(this.VigenereMethod_Click);
             // 
             // PolybiusSquareMethod
             // 
@@ -230,6 +236,7 @@
             this.PolybiusSquareMethod.TabStop = true;
             this.PolybiusSquareMethod.Text = "Polybius Square";
             this.PolybiusSquareMethod.UseVisualStyleBackColor = true;
+            this.PolybiusSquareMethod.Click += new System.EventHandler(this.PolybiusSquareMethod_Click);
             // 
             // BASE64Method
             // 
@@ -241,6 +248,7 @@
             this.BASE64Method.TabStop = true;
             this.BASE64Method.Text = "BASE64";
             this.BASE64Method.UseVisualStyleBackColor = true;
+            this.BASE64Method.Click += new System.EventHandler(this.BASE64Method_Click);
             // 
             // XORMethod
             // 
@@ -252,6 +260,7 @@
             this.XORMethod.TabStop = true;
             this.XORMethod.Text = "XOR";
             this.XORMethod.UseVisualStyleBackColor = true;
+            this.XORMethod.Click += new System.EventHandler(this.XORMethod_Click);
             // 
             // EncryptButton
             // 
@@ -378,11 +387,41 @@
             this.SizeLabel.TabIndex = 0;
             this.SizeLabel.Text = "Size";
             // 
+            // contentOfFile
+            // 
+            this.contentOfFile.Location = new System.Drawing.Point(619, 175);
+            this.contentOfFile.Name = "contentOfFile";
+            this.contentOfFile.ReadOnly = true;
+            this.contentOfFile.Size = new System.Drawing.Size(480, 245);
+            this.contentOfFile.TabIndex = 22;
+            this.contentOfFile.Text = "";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(619, 431);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 15);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "Warnings";
+            // 
+            // warningText
+            // 
+            this.warningText.AutoSize = true;
+            this.warningText.BackColor = System.Drawing.Color.Red;
+            this.warningText.Location = new System.Drawing.Point(682, 431);
+            this.warningText.Name = "warningText";
+            this.warningText.Size = new System.Drawing.Size(0, 15);
+            this.warningText.TabIndex = 24;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1111, 551);
+            this.Controls.Add(this.warningText);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.contentOfFile);
             this.Controls.Add(this.FileInfoBox);
             this.Controls.Add(this.ProgressTitle);
             this.Controls.Add(this.progressBar1);
@@ -398,6 +437,9 @@
             this.Controls.Add(this.LogInfo);
             this.Controls.Add(this.FileExplorer);
             this.Controls.Add(this.ToolBar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Main";
             this.Text = "EncryptionApp";
             this.ToolBar.ResumeLayout(false);
@@ -444,5 +486,8 @@
         private System.Windows.Forms.Label sizeOfFile;
         private System.Windows.Forms.Label SizeLabel;
         private System.Windows.Forms.RadioButton Caesar;
+        private System.Windows.Forms.RichTextBox contentOfFile;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label warningText;
     }
 }

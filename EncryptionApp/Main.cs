@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Message = EncryptionApp.Models.Models.Message;
@@ -60,6 +60,41 @@ namespace EncryptionApp.UI
                 createOfFile.Text = fileInfo.CreationTime.ToString();
 
                 await CreateLog($"File is opened: {fileInfo.Name}");
+
+
+                await Task.Run(async () =>
+                {
+                    using (StreamReader sr = new StreamReader(fullPath, Encoding.UTF8))
+                    {
+                        string line = "";
+                        int counter = 0;
+
+                        contentOfFile.Invoke((Action)delegate
+                        {
+                            contentOfFile.Text = "";
+                        });
+
+                        while ((line = await sr.ReadLineAsync()) != null)
+                        {
+                            if (counter != 200)
+                            {
+                                contentOfFile.Invoke((Action)delegate
+                                {
+                                    contentOfFile.Text += line;
+                                });
+
+                                counter++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+
+                        sr.Close();
+                    }
+                });
+
             }
             else
             {
@@ -150,19 +185,27 @@ namespace EncryptionApp.UI
         private async void EncryptButton_Click(object sender, EventArgs e)
         {
             var key = EncDecKey.Text;
+            bool resultOfEncrypting = false;
 
             if (XORMethod.Checked)
             {
                 XORCipher xor = new XORCipher();
                 ProcessFile<string> xorEnc = xor.Encrypt;
 
-                var resultOfProcessing = await ProccessOfDecryptionOrEnctyprion(xorEnc, key, true);
+                resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(xorEnc, key, true);
+            }
+            if(VigenereMethod.Checked)
+            {
+                VigenereCipher vigenereCipher = new VigenereCipher();
+                ProcessFile<string> vigenereEnc = vigenereCipher.Encrypt;
 
-                if (resultOfProcessing)
-                {
-                    ShowProccesMessage("File is encrypted");
-                    ClearScreenInfo();
-                }
+                resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(vigenereEnc, key, true);
+            }
+
+            if (resultOfEncrypting)
+            {
+                ShowProccesMessage("File is encrypted");
+                ClearScreenInfo();
             }
         }
 
@@ -172,19 +215,28 @@ namespace EncryptionApp.UI
         private async void DecryptButton_Click(object sender, EventArgs e)
         {
             var key = EncDecKey.Text;
+            bool resultOfDecrypting = false;
 
             if (XORMethod.Checked)
             {
                 XORCipher xor = new XORCipher();
                 ProcessFile<string> xorDec = xor.Decrypt;
 
-                var resultOfProcessing = await ProccessOfDecryptionOrEnctyprion(xorDec, key, false);
+                resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(xorDec, key, false);
+            }
 
-                if (resultOfProcessing)
-                {
-                    ShowProccesMessage("File is decrypted");
-                    ClearScreenInfo();
-                }
+            if (VigenereMethod.Checked)
+            {
+                VigenereCipher vigenereCipher = new VigenereCipher();
+                ProcessFile<string> vigenereDec = vigenereCipher.Decrypt;
+
+                resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(vigenereDec, key, false);
+            }
+
+            if (resultOfDecrypting)
+            {
+                ShowProccesMessage("File is decrypted");
+                ClearScreenInfo();
             }
         }
 
@@ -228,7 +280,7 @@ namespace EncryptionApp.UI
         /// </summary>
         /// <param name="processFile">What to do with file</param>
         /// <returns></returns>
-        private async Task<bool> ProccessOfDecryptionOrEnctyprion<T>(ProcessFile<T> processFile, T key, bool addEnc)
+        private async Task<bool> ProccessOfDecryptionOrEnctyprionWithKey<T>(ProcessFile<T> processFile, T key, bool addEnc)
         {
             Timer timer = new Timer();
             timer.Tick += Timer_Tick;
@@ -369,6 +421,43 @@ namespace EncryptionApp.UI
                 await sw.WriteAsync(processedText);
                 sw.Close();
             }
+        }
+
+        private void VigenereMethod_Click(object sender, EventArgs e)
+        {
+            SetWarningText("For the Vigenere cipher text of the file should be only on english language!");
+        }
+
+        private void XORMethod_Click(object sender, EventArgs e)
+        {
+            SetWarningText();
+        }
+
+
+
+        private void SetWarningText(string text = "")
+        {
+            warningText.Text = text;
+        }
+
+        private void BASE64Method_Click(object sender, EventArgs e)
+        {
+            SetWarningText();
+        }
+
+        private void PolybiusSquareMethod_Click(object sender, EventArgs e)
+        {
+            SetWarningText();
+        }
+
+        private void ScietaleMethod_Click(object sender, EventArgs e)
+        {
+            SetWarningText();
+        }
+
+        private void Caesar_Click(object sender, EventArgs e)
+        {
+            SetWarningText();
         }
     }
 }
