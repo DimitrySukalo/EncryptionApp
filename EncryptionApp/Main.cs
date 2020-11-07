@@ -1,5 +1,6 @@
 ﻿using EncryptionApp.Models.DB;
 using EncryptionApp.Models.Models;
+using EncryptionApp.Models.Models.Ciphers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -201,6 +202,17 @@ namespace EncryptionApp.UI
 
                 resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(vigenereEnc, key, true);
             }
+            if (Caesar.Checked)
+            {
+                var resultOfChecking = CheckKeyForNumber();
+                if (resultOfChecking.isNumber)
+                {
+                    CaesarCipher caesarCipher = new CaesarCipher();
+                    ProcessFile<int> caesarEnc = caesarCipher.Encrypt;
+
+                    resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(caesarEnc, (int)resultOfChecking.key, false);
+                }
+            }
 
             if (resultOfEncrypting)
             {
@@ -231,6 +243,17 @@ namespace EncryptionApp.UI
                 ProcessFile<string> vigenereDec = vigenereCipher.Decrypt;
 
                 resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(vigenereDec, key, false);
+            }
+            if(Caesar.Checked)
+            {
+                var resultOfChecking = CheckKeyForNumber();
+                if (resultOfChecking.isNumber)
+                {
+                    CaesarCipher caesarCipher = new CaesarCipher();
+                    ProcessFile<int> caesarDec = caesarCipher.Decrypt;
+
+                    resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(caesarDec, (int)resultOfChecking.key, false);
+                }
             }
 
             if (resultOfDecrypting)
@@ -425,7 +448,7 @@ namespace EncryptionApp.UI
 
         private void VigenereMethod_Click(object sender, EventArgs e)
         {
-            SetWarningText("For the Vigenere cipher text of the file should be only on english language!");
+            SetWarningText("For the Vigenere cipher text of the file should be only on english or russian language!");
         }
 
         private void XORMethod_Click(object sender, EventArgs e)
@@ -457,7 +480,23 @@ namespace EncryptionApp.UI
 
         private void Caesar_Click(object sender, EventArgs e)
         {
-            SetWarningText();
+            SetWarningText("Key should be only number");
+            CheckKeyForNumber();
+        }
+
+        private (bool isNumber, int? key) CheckKeyForNumber()
+        {
+            int result = 0;
+            var key = EncDecKey.Text;
+            if (!Int32.TryParse(key, out result))
+            {
+                EncDecKey.Text = "";
+                MessageBox.Show("Key shoult be only number!");
+
+                return (false, null);
+            }
+
+            return (true, result);
         }
     }
 }
