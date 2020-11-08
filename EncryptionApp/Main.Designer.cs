@@ -143,6 +143,7 @@
             this.EncDecKey.Name = "EncDecKey";
             this.EncDecKey.Size = new System.Drawing.Size(217, 23);
             this.EncDecKey.TabIndex = 6;
+            this.EncDecKey.TextChanged += new System.EventHandler(this.EncDecKey_TextChanged);
             // 
             // QuestionText
             // 

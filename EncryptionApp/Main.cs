@@ -220,6 +220,13 @@ namespace EncryptionApp.UI
 
                 resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(baseEnc, key, true);
             }
+            if(PolybiusSquareMethod.Checked)
+            {
+                PolybiusSquareCipher polybiusSquare = new PolybiusSquareCipher();
+                ProcessFile<string> polybiusEnc = polybiusSquare.PolibiusEncrypt;
+
+                resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(polybiusEnc, key, true);
+            }
 
             if (resultOfEncrypting)
             {
@@ -268,6 +275,13 @@ namespace EncryptionApp.UI
                 ProcessFile<string> baseDec = base64.Decrypt;
 
                 resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(baseDec, key, true);
+            }
+            if (PolybiusSquareMethod.Checked)
+            {
+                PolybiusSquareCipher polybiusSquare = new PolybiusSquareCipher();
+                ProcessFile<string> polybiusDec = polybiusSquare.PolybiusDecrypt;
+
+                resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(polybiusDec, key, true);
             }
 
             if (resultOfDecrypting)
@@ -520,6 +534,25 @@ namespace EncryptionApp.UI
         {
             EncDecKey.Text = "";
             EncDecKey.ReadOnly = isReadonly;
+        }
+
+        private void EncDecKey_TextChanged(object sender, EventArgs e)
+        {
+            if(PolybiusSquareMethod.Checked)
+            {
+                var symbols = EncDecKey.Text.ToCharArray();
+                if (symbols.Length > 0)
+                {
+                    var currentSymbol = symbols[EncDecKey.Text.Length - 1];
+
+                    var countOfSymbols = symbols.Where(x => x.Equals(currentSymbol)).ToList().Count;
+                    if (countOfSymbols > 1)
+                    {
+                        EncDecKey.Text = EncDecKey.Text.Remove(EncDecKey.Text.Length - 1);
+                        MessageBox.Show("Key should not contain equal symbols");
+                    }
+                }
+            }
         }
     }
 }
