@@ -210,8 +210,15 @@ namespace EncryptionApp.UI
                     CaesarCipher caesarCipher = new CaesarCipher();
                     ProcessFile<int> caesarEnc = caesarCipher.Encrypt;
 
-                    resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(caesarEnc, (int)resultOfChecking.key, false);
+                    resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(caesarEnc, (int)resultOfChecking.key, true);
                 }
+            }
+            if(BASE64Method.Checked)
+            {
+                Base64Cipher base64 = new Base64Cipher();
+                ProcessFile<string> baseEnc = base64.Encrypt;
+
+                resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(baseEnc, key, true);
             }
 
             if (resultOfEncrypting)
@@ -254,6 +261,13 @@ namespace EncryptionApp.UI
 
                     resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(caesarDec, (int)resultOfChecking.key, false);
                 }
+            }
+            if(BASE64Method.Checked)
+            {
+                Base64Cipher base64 = new Base64Cipher();
+                ProcessFile<string> baseDec = base64.Decrypt;
+
+                resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(baseDec, key, true);
             }
 
             if (resultOfDecrypting)
@@ -454,9 +468,8 @@ namespace EncryptionApp.UI
         private void XORMethod_Click(object sender, EventArgs e)
         {
             SetWarningText();
+            ResetAndReadOnlyKey(false);
         }
-
-
 
         private void SetWarningText(string text = "")
         {
@@ -466,22 +479,26 @@ namespace EncryptionApp.UI
         private void BASE64Method_Click(object sender, EventArgs e)
         {
             SetWarningText();
+            ResetAndReadOnlyKey(true);
         }
 
         private void PolybiusSquareMethod_Click(object sender, EventArgs e)
         {
             SetWarningText();
+            ResetAndReadOnlyKey(false);
         }
 
         private void ScietaleMethod_Click(object sender, EventArgs e)
         {
             SetWarningText();
+            ResetAndReadOnlyKey(false);
         }
 
         private void Caesar_Click(object sender, EventArgs e)
         {
             SetWarningText("Key should be only number");
             CheckKeyForNumber();
+            ResetAndReadOnlyKey(false);
         }
 
         private (bool isNumber, int? key) CheckKeyForNumber()
@@ -497,6 +514,12 @@ namespace EncryptionApp.UI
             }
 
             return (true, result);
+        }
+
+        private void ResetAndReadOnlyKey(bool isReadonly)
+        {
+            EncDecKey.Text = "";
+            EncDecKey.ReadOnly = isReadonly;
         }
     }
 }
