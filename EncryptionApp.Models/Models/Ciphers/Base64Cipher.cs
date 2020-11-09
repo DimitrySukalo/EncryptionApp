@@ -7,18 +7,28 @@ namespace EncryptionApp.Models.Models.Ciphers
     {
         public string Encrypt(string message, string key = "")
         {
-            var byteArray = Encoding.ASCII.GetBytes(message);
-            var encryptedMessage = Convert.ToBase64String(byteArray);
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                var byteArray = Encoding.ASCII.GetBytes(message);
+                var encryptedMessage = Convert.ToBase64String(byteArray);
 
-            return encryptedMessage;
+                return encryptedMessage;
+            }
+
+            return string.Empty;
         }
 
         public string Decrypt(string message, string key = "")
         {
-            var decodedBytes = Convert.FromBase64String(message);
-            var decodedMessage = Encoding.ASCII.GetString(decodedBytes);
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                var decodedBytes = Convert.FromBase64String(message);
+                var decodedMessage = Encoding.ASCII.GetString(decodedBytes);
 
-            return decodedMessage;
+                return decodedMessage;
+            }
+
+            return string.Empty;
         }
     }
 }

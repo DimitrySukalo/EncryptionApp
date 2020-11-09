@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Tests\" />
+    <ProjectReference Include="..\EncryptionApp.Models\EncryptionApp.Models.csproj" />
   </ItemGroup>
 
 </Project>
