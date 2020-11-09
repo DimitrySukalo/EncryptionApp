@@ -42,7 +42,7 @@
             this.NoRadioButton = new System.Windows.Forms.RadioButton();
             this.Methods = new System.Windows.Forms.GroupBox();
             this.Caesar = new System.Windows.Forms.RadioButton();
-            this.ScietaleMethod = new System.Windows.Forms.RadioButton();
+            this.AtbashMethod = new System.Windows.Forms.RadioButton();
             this.VigenereMethod = new System.Windows.Forms.RadioButton();
             this.PolybiusSquareMethod = new System.Windows.Forms.RadioButton();
             this.BASE64Method = new System.Windows.Forms.RadioButton();
@@ -179,7 +179,7 @@
             // Methods
             // 
             this.Methods.Controls.Add(this.Caesar);
-            this.Methods.Controls.Add(this.ScietaleMethod);
+            this.Methods.Controls.Add(this.AtbashMethod);
             this.Methods.Controls.Add(this.VigenereMethod);
             this.Methods.Controls.Add(this.PolybiusSquareMethod);
             this.Methods.Controls.Add(this.BASE64Method);
@@ -203,17 +203,17 @@
             this.Caesar.UseVisualStyleBackColor = true;
             this.Caesar.Click += new System.EventHandler(this.Caesar_Click);
             // 
-            // ScietaleMethod
+            // AtbashMethod
             // 
-            this.ScietaleMethod.AutoSize = true;
-            this.ScietaleMethod.Location = new System.Drawing.Point(6, 122);
-            this.ScietaleMethod.Name = "ScietaleMethod";
-            this.ScietaleMethod.Size = new System.Drawing.Size(65, 19);
-            this.ScietaleMethod.TabIndex = 0;
-            this.ScietaleMethod.TabStop = true;
-            this.ScietaleMethod.Text = "Scietale";
-            this.ScietaleMethod.UseVisualStyleBackColor = true;
-            this.ScietaleMethod.Click += new System.EventHandler(this.ScietaleMethod_Click);
+            this.AtbashMethod.AutoSize = true;
+            this.AtbashMethod.Location = new System.Drawing.Point(6, 122);
+            this.AtbashMethod.Name = "AtbashMethod";
+            this.AtbashMethod.Size = new System.Drawing.Size(62, 19);
+            this.AtbashMethod.TabIndex = 0;
+            this.AtbashMethod.TabStop = true;
+            this.AtbashMethod.Text = "Atbash";
+            this.AtbashMethod.UseVisualStyleBackColor = true;
+            this.AtbashMethod.Click += new System.EventHandler(this.AtbashMethod_Click);
             // 
             // VigenereMethod
             // 
@@ -468,7 +468,7 @@
         private System.Windows.Forms.RadioButton YesRadioButton;
         private System.Windows.Forms.RadioButton NoRadioButton;
         private System.Windows.Forms.GroupBox Methods;
-        private System.Windows.Forms.RadioButton ScietaleMethod;
+        private System.Windows.Forms.RadioButton AtbashMethod;
         private System.Windows.Forms.RadioButton VigenereMethod;
         private System.Windows.Forms.RadioButton PolybiusSquareMethod;
         private System.Windows.Forms.RadioButton BASE64Method;

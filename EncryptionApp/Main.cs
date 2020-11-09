@@ -227,6 +227,13 @@ namespace EncryptionApp.UI
 
                 resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(polybiusEnc, key, true);
             }
+            if(AtbashMethod.Checked)
+            {
+                AtbashCipher atbashCipher = new AtbashCipher();
+                ProcessFile<string> atbashEnc = atbashCipher.EncryptText;
+
+                resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(atbashEnc, key, false);
+            }
 
             if (resultOfEncrypting)
             {
@@ -274,14 +281,22 @@ namespace EncryptionApp.UI
                 Base64Cipher base64 = new Base64Cipher();
                 ProcessFile<string> baseDec = base64.Decrypt;
 
-                resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(baseDec, key, true);
+                resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(baseDec, key, false);
             }
             if (PolybiusSquareMethod.Checked)
             {
                 PolybiusSquareCipher polybiusSquare = new PolybiusSquareCipher();
                 ProcessFile<string> polybiusDec = polybiusSquare.PolybiusDecrypt;
 
-                resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(polybiusDec, key, true);
+                resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(polybiusDec, key, false);
+            }
+            if (AtbashMethod.Checked)
+            {
+                AtbashCipher atbashCipher = new AtbashCipher();
+                ProcessFile<string> atbashDec = atbashCipher.DecryptText;
+
+                resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(atbashDec, key, false);
+
             }
 
             if (resultOfDecrypting)
@@ -501,11 +516,10 @@ namespace EncryptionApp.UI
             SetWarningText();
             ResetAndReadOnlyKey(false);
         }
-
-        private void ScietaleMethod_Click(object sender, EventArgs e)
+        private void AtbashMethod_Click(object sender, EventArgs e)
         {
             SetWarningText();
-            ResetAndReadOnlyKey(false);
+            ResetAndReadOnlyKey(true);
         }
 
         private void Caesar_Click(object sender, EventArgs e)
