@@ -229,10 +229,17 @@ namespace EncryptionApp.UI
             }
             if(AtbashMethod.Checked)
             {
-                AtbashCipher atbashCipher = new AtbashCipher();
-                ProcessFile<string> atbashEnc = atbashCipher.EncryptText;
+                if (!CheckTextOfFile())
+                {
+                    AtbashCipher atbashCipher = new AtbashCipher();
+                    ProcessFile<string> atbashEnc = atbashCipher.EncryptText;
 
-                resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(atbashEnc, key, false);
+                    resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(atbashEnc, key, false);
+                }
+                else
+                {
+                    MessageBox.Show("Text of the file is not correct!");
+                }
             }
 
             if (resultOfEncrypting)
@@ -292,10 +299,17 @@ namespace EncryptionApp.UI
             }
             if (AtbashMethod.Checked)
             {
-                AtbashCipher atbashCipher = new AtbashCipher();
-                ProcessFile<string> atbashDec = atbashCipher.DecryptText;
+                if (!CheckTextOfFile())
+                {
+                    AtbashCipher atbashCipher = new AtbashCipher();
+                    ProcessFile<string> atbashDec = atbashCipher.DecryptText;
 
-                resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(atbashDec, key, false);
+                    resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(atbashDec, key, false);
+                }
+                else
+                {
+                    MessageBox.Show("Text of the file is not correct!");
+                }
 
             }
 
@@ -518,7 +532,7 @@ namespace EncryptionApp.UI
         }
         private void AtbashMethod_Click(object sender, EventArgs e)
         {
-            SetWarningText();
+            SetWarningText("Text should be only letters without any numbers and symbols");
             ResetAndReadOnlyKey(true);
         }
 
@@ -548,6 +562,24 @@ namespace EncryptionApp.UI
         {
             EncDecKey.Text = "";
             EncDecKey.ReadOnly = isReadonly;
+        }
+
+        private bool CheckTextOfFile()
+        {
+            char[] symbols = "123456789.,/\\!@#$%^&*()_+-=/*{};'\":".ToCharArray();
+            var text = contentOfFile.Text;
+            bool isContains = false;
+            
+            foreach(var symbol in symbols)
+            {
+                if (text.Contains(symbol))
+                {
+                    isContains = true;
+                    break;
+                }
+            }
+
+            return isContains;
         }
 
         private void EncDecKey_TextChanged(object sender, EventArgs e)

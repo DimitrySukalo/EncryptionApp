@@ -4,19 +4,17 @@ using Xunit;
 
 namespace EncryptionApp.Tests.Tests
 {
-    public class CaesarTests
+    public class AtbashTests
     {
         [Fact]
         private void EncryptMethodReturnsMessage()
         {
             //Arrange
-            var caesarCipher = new CaesarCipher();
-            var message = Guid.NewGuid().ToString();
-
-            var key = new Random().Next(1, 10);
+            var atbashCipher = new AtbashCipher();
+            var message = "test";
 
             //Act
-            var encryptredMessage = caesarCipher.Encrypt(message, key);
+            var encryptredMessage = atbashCipher.EncryptText(message);
 
             //Assert
             Assert.NotNull(encryptredMessage);
@@ -26,13 +24,11 @@ namespace EncryptionApp.Tests.Tests
         private void DecryptMethodReturnsMessage()
         {
             //Arrange
-            var caesarCipher = new CaesarCipher();
-            var message = Guid.NewGuid().ToString();
-
-            var key = new Random().Next(1, 10);
+            var atbashCipher = new AtbashCipher();
+            var message = "test";
 
             //Act
-            var encryptredMessage = caesarCipher.Decrypt(message, key);
+            var encryptredMessage = atbashCipher.DecryptText(message);
 
             //Assert
             Assert.NotNull(encryptredMessage);
@@ -42,14 +38,12 @@ namespace EncryptionApp.Tests.Tests
         private void MessagesAreEqual()
         {
             //Arrange
-            var caesarCipher = new CaesarCipher();
-            var message = Guid.NewGuid().ToString();
-
-            var key = new Random().Next(1, 10);
+            var atbashCipher = new AtbashCipher();
+            var message = "test";
 
             //Act
-            var encryptredMessage = caesarCipher.Encrypt(message, key);
-            var decryptedMessage = caesarCipher.Decrypt(encryptredMessage, key);
+            var encryptredMessage = atbashCipher.EncryptText(message.ToLower());
+            var decryptedMessage = atbashCipher.DecryptText(encryptredMessage.ToLower());
 
             //Assert
             Assert.NotNull(encryptredMessage);
