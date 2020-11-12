@@ -22,7 +22,7 @@ namespace EncryptionApp.Models.Models.Ciphers
 
             //добавляем пароль в начало алфавита, а в конец дополнительные знаки
             //для того чтобы избежать пустых ячеек
-            newAlphabet = key + newAlphabet + "0123456789!@#$%^&*)_+-=<>?,.";
+            newAlphabet = key + newAlphabet + "0123456789!@#$%^&*)_+-=<>?,.-";
 
             //получаем размер стороны квадрата
             //округлением квадратного корня в сторону большего целого числа
@@ -73,7 +73,7 @@ namespace EncryptionApp.Models.Models.Ciphers
         public string PolibiusEncrypt(string text, string password)
         {
             alphabet = CheckAlfabet(text); 
-            text = text.ToUpper();
+                text = text.ToUpper();
             password = password.ToUpper();
 
             var outputText = "";

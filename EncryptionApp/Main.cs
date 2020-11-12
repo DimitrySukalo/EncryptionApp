@@ -222,10 +222,17 @@ namespace EncryptionApp.UI
             }
             if(PolybiusSquareMethod.Checked)
             {
+                if(!CheckTextOfFile())
+                { 
                 PolybiusSquareCipher polybiusSquare = new PolybiusSquareCipher();
                 ProcessFile<string> polybiusEnc = polybiusSquare.PolibiusEncrypt;
 
                 resultOfEncrypting = await ProccessOfDecryptionOrEnctyprionWithKey(polybiusEnc, key, true);
+                }
+                else
+                {
+                    MessageBox.Show("Text of the file is not correct!");
+                }
             }
             if(AtbashMethod.Checked)
             {
@@ -292,10 +299,17 @@ namespace EncryptionApp.UI
             }
             if (PolybiusSquareMethod.Checked)
             {
-                PolybiusSquareCipher polybiusSquare = new PolybiusSquareCipher();
-                ProcessFile<string> polybiusDec = polybiusSquare.PolybiusDecrypt;
+                if (!CheckTextOfFile())
+                {
+                    PolybiusSquareCipher polybiusSquare = new PolybiusSquareCipher();
+                    ProcessFile<string> polybiusDec = polybiusSquare.PolybiusDecrypt;
 
-                resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(polybiusDec, key, false);
+                    resultOfDecrypting = await ProccessOfDecryptionOrEnctyprionWithKey(polybiusDec, key, false);
+                }
+                else
+                {
+                    MessageBox.Show("Text of the file is not correct!");
+                }
             }
             if (AtbashMethod.Checked)
             {
@@ -527,7 +541,7 @@ namespace EncryptionApp.UI
 
         private void PolybiusSquareMethod_Click(object sender, EventArgs e)
         {
-            SetWarningText();
+            SetWarningText("Text should be only letters without any numbers and symbols");
             ResetAndReadOnlyKey(false);
         }
         private void AtbashMethod_Click(object sender, EventArgs e)
